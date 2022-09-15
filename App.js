@@ -17,6 +17,7 @@ import WeatherScreen from './src/screens/weather/WeatherScreen';
 import LiveStreamScreen from './src/screens/live stream/LiveStreamScreen';
 import LiveContentScreen from './src/screens/live stream/LiveContentScreen';
 import ListBleDevicesScreen from './src/screens/ble/ListBleDevicesScreen';
+import DeviceActionScreen from './src/screens/ble/DeviceActionScreen';
 
 
 function SideNavigation() {
@@ -66,6 +67,7 @@ function App() {
 				<Stack.Screen name="Profile Picture" component={ProfilePictureScreen} /*options={{ drawerItemStyle: { display: "none" } }}*/ />
 				<Stack.Screen name="Edit Profile" component={EditProfileScreen} />
 				<Stack.Screen name="Live Content" component={LiveContentScreen} />
+				<Stack.Screen name="Device Action" component={DeviceActionScreen} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	);
