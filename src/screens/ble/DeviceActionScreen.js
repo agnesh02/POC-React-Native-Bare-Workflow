@@ -54,7 +54,8 @@ const DeviceActionScreen = function ({ route }) {
         _BleManager.cancelDeviceConnection(deviceId)
             .then(async (device) => {
                 console.log(await device.isConnected())
-                Toaster("Device has been disconnected successfully")
+                Toaster("Device has been disconnected successfully"+
+                "\nJust a reminder to turn off bluetooth and location if you no longer need it")
             })
             .catch((error) => {
                 console.log(error.message)

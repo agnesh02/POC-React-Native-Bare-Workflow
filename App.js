@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { Text, TouchableOpacity } from 'react-native';
+import Toaster from './src/components/Toaster';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -57,7 +59,9 @@ function SideNavigation() {
 
 const Stack = createNativeStackNavigator();
 
+
 function App() {
+
 	return (
 		<NavigationContainer>
 			<Stack.Navigator>

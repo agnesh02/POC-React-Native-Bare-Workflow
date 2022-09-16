@@ -15,8 +15,8 @@ const ListBleDevicesScreen = function App({ navigation }) {
         const granted = await PermissionsAndroid.request(
             PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
             {
-                title: 'Permission Localisation Bluetooth',
-                message: 'Requirement for Bluetooth',
+                title: 'Permission for Bluetooth',
+                message: 'Requirement for BLE scanning/read/write/notify',
                 buttonNeutral: 'Later',
                 buttonNegative: 'Cancel',
                 buttonPositive: 'OK',
@@ -67,6 +67,8 @@ const ListBleDevicesScreen = function App({ navigation }) {
                 return
             }
 
+            Toaster("Please wait a few seconds to display the discovered devices")
+
             let deviceInfo = { deviceId: device.id, deviceName: device.name }
             let checkIfAlreadyListed = deviceList
                 .map(item => item.deviceId)
@@ -77,9 +79,10 @@ const ListBleDevicesScreen = function App({ navigation }) {
                 setDeviceList(deviceList)
                 console.log(deviceList)
             }
-        });
 
-        setTimeout(() => { stopScan() }, 6000);
+            setTimeout(() => { stopScan() }, 10000);
+
+        });
     }
 
     const stopScan = async function () {
