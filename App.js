@@ -20,6 +20,7 @@ import LiveStreamScreen from './src/screens/live stream/LiveStreamScreen';
 import LiveContentScreen from './src/screens/live stream/LiveContentScreen';
 import ListBleDevicesScreen from './src/screens/ble/ListBleDevicesScreen';
 import DeviceActionScreen from './src/screens/ble/DeviceActionScreen';
+import SplashScreen from './src/components/SplashScreen';
 
 
 function SideNavigation() {
@@ -65,7 +66,8 @@ function App() {
 	return (
 		<NavigationContainer>
 			<Stack.Navigator>
-				<Stack.Screen name="Login" component={LoginScreen} />
+				<Stack.Screen options={{ headerShown: false }} name="Splash Screen" component={SplashScreen} />
+				<Stack.Screen options={{ headerBackVisible: false }} name="Login" component={LoginScreen} />
 				<Stack.Screen name="Registration" component={RegistrationScreen} />
 				<Stack.Screen options={{ headerShown: false }} name="Side Navigation" component={SideNavigation} />
 				<Stack.Screen name="Profile Picture" component={ProfilePictureScreen} /*options={{ drawerItemStyle: { display: "none" } }}*/ />

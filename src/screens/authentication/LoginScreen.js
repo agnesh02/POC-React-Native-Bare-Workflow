@@ -1,46 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Text, TextInput, View, StyleSheet, TouchableOpacity, ActivityIndicator } from "react-native"
+import CheckBox from '@react-native-community/checkbox';
 import Toaster from "../../components/Toaster";
 import { app } from "../../../api/FirebaseConfig";
 import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
 import { initializeFirestore } from "firebase/firestore";
 import { doc, getDoc } from "firebase/firestore";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LoginScreen = function () {
 
 	const auth = getAuth(app)
-
 	const navigation = useNavigation()
 
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 	const [visibility, setVisibility] = useState(false)
+	const [isChecked, setIsChecked] = useState(false);
 
-	const getUserData = async function () {
-
-		const firestore = initializeFirestore(app, { experimentalAutoDetectLongPolling: true })
-		const docRef = doc(firestore, "USERS", email)
-		const docSnap = await getDoc(docRef)
-
-		if (docSnap.exists()) {
-			Toaster("Welcome " + docSnap.data().username + ".")
-		}
-		else {
-			Toaster("An error occurred")
-		}
-	}
-
-	const loginUser = function () {
+	const loginUser = async function () {
 
 		signInWithEmailAndPassword(auth, email, password)
 			.then((userCredential) => {
-				// Signed in 
+				//const user = userCredential.user;
+
+				if (isChecked) {
+					AsyncStorage.setItem('isRemembered', "true")
+					AsyncStorage.setItem('as_email', email)
+					AsyncStorage.setItem('as_password', password)
+				}
 				setVisibility(false)
-				const user = userCredential.user;
-				getUserData()
-				navigation.navigate("Side Navigation")
-				// navigation.navigate("Side Navigation", { screen: "Dashboard", params: { userEmail: email } })
+				getUserData(email)
+				navigation.replace("Side Navigation")
 			})
 			.catch((error) => {
 				//const errorCode = error.code;
@@ -49,6 +41,20 @@ const LoginScreen = function () {
 				setVisibility(false)
 			});
 	}
+
+	const getUserData = async function (email) {
+
+        const firestore = initializeFirestore(app, { experimentalAutoDetectLongPolling: true })
+        const docRef = doc(firestore, "USERS", email)
+        const docSnap = await getDoc(docRef)
+
+        if (docSnap.exists()) {
+            Toaster("Welcome " + docSnap.data().username + ".")
+        }
+        else {
+            Toaster("An error occurred")
+        }
+    }
 
 	const validate = function () {
 		setVisibility(true)
@@ -68,10 +74,17 @@ const LoginScreen = function () {
 	}
 
 	return (
+
 		<View style={styling.container}>
+		
 			<View style={styling.inputContainer}>
 				<TextInput autoCapitalize="none" autoCorrect={false} placeholder="Email" value={email} onChangeText={text => setEmail(text.trim())} style={styling.input} />
 				<TextInput autoCapitalize="none" autoCorrect={false} placeholder="Password" value={password} onChangeText={text => setPassword(text.trim())} style={styling.input} secureTextEntry />
+			</View>
+
+			<View style={styling.checkboxContainer}>
+				<CheckBox value={isChecked} onValueChange={setIsChecked} style={styling.checkbox} />
+				<Text style={styling.label}>Remember Me</Text>
 			</View>
 
 			<View style={styling.buttonContainer}>
@@ -79,8 +92,9 @@ const LoginScreen = function () {
 					<Text style={styling.buttonText}>Login</Text>
 				</TouchableOpacity>
 			</View>
+
 			<View style={styling.buttonContainer2}>
-				<TouchableOpacity style={[styling.button2, styling.buttonOutline]} onPress={() => navigation.navigate("Registration")} >
+				<TouchableOpacity style={[styling.button2, styling.buttonOutline]} onPress={() =>  navigation.navigate("Registration")} >
 					<Text style={styling.buttonOutlineText}>Don't have an account ? Click here</Text>
 				</TouchableOpacity>
 			</View>
@@ -156,7 +170,18 @@ const styling = StyleSheet.create({
 		borderColor: "black",
 		position: "absolute",
 		top: 500
-	}
+	},
+	checkboxContainer: {
+		marginLeft: -160,
+		flexDirection: "row",
+		marginTop: 8,
+	},
+	checkbox: {
+		alignSelf: "center",
+	},
+	label: {
+		margin: 8,
+	},
 })
 
 export default LoginScreen

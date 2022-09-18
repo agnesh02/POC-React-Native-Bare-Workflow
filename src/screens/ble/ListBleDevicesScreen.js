@@ -36,7 +36,9 @@ const ListBleDevicesScreen = function App({ navigation }) {
         if (buttonTextState === 'Start Scanning') {
             setIsScanning(true)
             startScan()
+            setTimeout(() => { stopScan() }, 10000);
             console.log("Scanning started")
+            Toaster("Please wait a few seconds to display the discovered devices")
             setButtonTextState("Stop Scanning")
         }
         else {
@@ -67,8 +69,6 @@ const ListBleDevicesScreen = function App({ navigation }) {
                 return
             }
 
-            Toaster("Please wait a few seconds to display the discovered devices")
-
             let deviceInfo = { deviceId: device.id, deviceName: device.name }
             let checkIfAlreadyListed = deviceList
                 .map(item => item.deviceId)
@@ -79,14 +79,14 @@ const ListBleDevicesScreen = function App({ navigation }) {
                 setDeviceList(deviceList)
                 console.log(deviceList)
             }
-
-            setTimeout(() => { stopScan() }, 10000);
-
         });
     }
 
     const stopScan = async function () {
+
         _BleManager.stopDeviceScan()
+        if (deviceList.length < 1)
+            Toaster("No BLE devies found")
         setIsScanning(false)
         console.log("Scanning Stopped")
         setButtonTextState("Start Scanning")
