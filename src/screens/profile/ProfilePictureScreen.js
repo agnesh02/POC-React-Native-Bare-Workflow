@@ -5,13 +5,15 @@ import Toaster from "../../components/Toaster";
 import { app } from '../../../api/FirebaseConfig'
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { doc, initializeFirestore, updateDoc } from "firebase/firestore";
+import { useNavigation } from '@react-navigation/native';
 
 //import { getAuth } from 'firebase/auth'
 
 const ProfilePictureScreen = function ({ route }) {
 
     const { userEmail } = route.params
-
+    const navigation = useNavigation()
+    
     const [image, setImage] = useState(null);
     const [uploadingStatus, setUploadingStatus] = useState(false);
 
@@ -75,7 +77,8 @@ const ProfilePictureScreen = function ({ route }) {
                     setUploadingStatus(false)
                 })
 
-            Toaster("File uploaded successfully")
+            Toaster("Profile picture has been updated successfully")
+            navigation.replace("Side Navigation")
             setUploadingStatus(false)
         }
         catch (e) {

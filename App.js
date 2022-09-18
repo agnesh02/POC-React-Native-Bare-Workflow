@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 import Toaster from './src/components/Toaster';
 import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createDrawerNavigator, DrawerItem } from '@react-navigation/drawer';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import 'react-native-gesture-handler';
 
@@ -21,6 +21,7 @@ import LiveContentScreen from './src/screens/live stream/LiveContentScreen';
 import ListBleDevicesScreen from './src/screens/ble/ListBleDevicesScreen';
 import DeviceActionScreen from './src/screens/ble/DeviceActionScreen';
 import SplashScreen from './src/components/SplashScreen';
+import { color } from 'react-native-reanimated';
 
 
 function SideNavigation() {
@@ -49,11 +50,42 @@ function SideNavigation() {
 			}
 
 		>
-			<Drawer.Screen name="Dashboard" component={DashboardScreen} />
-			<Drawer.Screen name="Profile" component={ProfileScreen} /*options={ { drawerIcon: ({color}) => (<Ionicons name="person-outline" size={22} color={color} />) } }*/ />
-			<Drawer.Screen name="Weather" component={WeatherScreen} />
-			<Drawer.Screen name="Live Stream" component={LiveStreamScreen} />
-			<Drawer.Screen name="Bluetooth" component={ListBleDevicesScreen} />
+			<Drawer.Screen name="Dashboard" component={DashboardScreen} options={
+				{
+					drawerIcon: ({ color }) => (<Ionicons name="home-outline" size={20} color={color} />),
+					drawerLabelStyle: { fontSize: 17, marginLeft: -20 }
+				}
+			}
+			/>
+			<Drawer.Screen name="Profile" component={ProfileScreen}
+				options={
+					{
+						drawerIcon: ({ color }) => (<Ionicons name="person-circle-outline" size={22} color={color} />),
+						drawerLabelStyle: { fontSize: 17, marginLeft: -20 }
+					}
+				}
+			/>
+			<Drawer.Screen name="Weather" component={WeatherScreen} options={
+				{
+					drawerIcon: ({ color }) => (<Ionicons name="sunny-outline" size={22} color={color} />),
+					drawerLabelStyle: { fontSize: 17, marginLeft: -20 }
+				}
+			}
+			/>
+			<Drawer.Screen name="Live Stream" component={LiveStreamScreen} options={
+				{
+					drawerIcon: ({ color }) => (<Ionicons name="videocam-outline" size={22} color={color} />),
+					drawerLabelStyle: { fontSize: 17, marginLeft: -20 }
+				}
+			}
+			/>
+			<Drawer.Screen name="Bluetooth" component={ListBleDevicesScreen} options={
+				{
+					drawerIcon: ({ color }) => (<Ionicons name="bluetooth-outline" size={22} color={color} />),
+					drawerLabelStyle: { fontSize: 17, marginLeft: -20 }
+				}
+			}
+			/>
 		</Drawer.Navigator>
 	);
 }

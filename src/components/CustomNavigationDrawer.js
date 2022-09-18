@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ImageBackground, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, ImageBackground, Image, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
 import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import { app } from '../../api/FirebaseConfig';
 import { getAuth } from 'firebase/auth';
@@ -16,9 +16,10 @@ const CustomDrawer = props => {
     const userEmail = auth.currentUser?.email
     const [username, setUsername] = useState('')
     const [imageUrl, setImageUrl] = useState('')
+    const [visibility, setVisibility] = useState(false)
 
     const getProfileData = async function () {
-
+        setVisibility(true)
         const firestore = initializeFirestore(app, { experimentalAutoDetectLongPolling: true })
         const docRef = doc(firestore, "USERS", userEmail)
         const docSnap = await getDoc(docRef)
@@ -27,13 +28,16 @@ const CustomDrawer = props => {
             const data = docSnap.data()
             setUsername(data.username)
             setImageUrl(data.image_uri)
+            setVisibility(false)
         }
         else {
             //Toaster("Some error occurred")
+            setVisibility(false)
         }
     }
 
-    useEffect(() => { getProfileData() }, [])
+    useEffect(()=>{getProfileData()},[ ])
+    
 
     const logoutUser = async function () {
 
@@ -62,6 +66,7 @@ const CustomDrawer = props => {
                     {imageUrl === "" && <Image source={require("../../assets/user.png")} style={styling.imageAvatarStyle} />}
                     <Text style={styling.navHeaderTextStyle}> {username} </Text>
                     <Text style={styling.navHeaderTextStyle2}> {userEmail} </Text>
+                    {visibility ? <ActivityIndicator style={styling.pBar} size="large" /> : null}
 
                 </ImageBackground>
 
@@ -74,7 +79,7 @@ const CustomDrawer = props => {
                 <TouchableOpacity onPress={() => { logoutUser() }} style={{ paddingVertical: 15 }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <IonIcon name="exit-outline" size={24} color="red" />
-                        <Text style={{ fontSize: 15, marginLeft: 5 }}> Loguut </Text>
+                        <Text style={{ fontSize: 15, marginLeft: 5 }}> Logout </Text>
                     </View>
                 </TouchableOpacity>
             </View>
@@ -103,7 +108,11 @@ const styling = StyleSheet.create({
         color: '#fff',
         fontSize: 18,
         marginBottom: 10
-    }
+    },
+    pBar: {
+        position: 'absolute',
+		top: 73
+	},
 })
 
 export default CustomDrawer;

@@ -1,5 +1,5 @@
 import React , {useEffect, useState} from "react";
-import {Text, View, StyleSheet, Image, TouchableOpacity, ScrollView} from "react-native"
+import {Text, View, StyleSheet, Image, TouchableOpacity, ScrollView, ActivityIndicator} from "react-native"
 import Toaster from "../../components/Toaster";
 import { initializeFirestore } from "firebase/firestore";
 import { doc, getDoc } from "firebase/firestore";
@@ -22,9 +22,12 @@ const ProfileScreen = function({navigation}){
     const [dob, setDob] = useState('')
     const [contact, setContact] = useState('')
     const [imageUrl, setImageUrl] = useState(null);
+    const [visibility, setVisibility] = useState(false)
+
     
     const getProfileData = async function(){
 
+        setVisibility(true)
         const firestore = initializeFirestore(app, { experimentalAutoDetectLongPolling: true })
         const docRef = doc(firestore, "USERS", userEmail)
         const docSnap = await getDoc(docRef)
@@ -48,6 +51,7 @@ const ProfileScreen = function({navigation}){
         await getDownloadURL(storageRef)
             .then((url) => {
                 setImageUrl(url)
+                setVisibility(false)
             })
             .catch((error) => {
                 //Toaster(error.message)
@@ -85,6 +89,8 @@ const ProfileScreen = function({navigation}){
                 </View>
             </View>
             </ScrollView>
+
+            {visibility ? <ActivityIndicator style={styling.pBar} size="large" /> : null}
             
         </View>
     )
@@ -152,7 +158,10 @@ const styling = StyleSheet.create({
         width: 80,
         borderRadius:30,
         backgroundColor: "#00BFFF",
-    }
+    },
+    pBar: {
+		marginTop: 200
+	},
 
 })
 
