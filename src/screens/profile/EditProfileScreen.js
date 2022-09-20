@@ -23,11 +23,16 @@ const EditProfileScreen = function ({ route }) {
 		const firestore = initializeFirestore(app, { experimentalAutoDetectLongPolling: true })
 		const docRef = doc(firestore, "USERS", userEmail)
 
+		let image_uri = imageUrlParam
+
+		if(image_uri===null)
+			image_uri = ""
+
 		const data = {
 			username: username,
 			fullname: fullname,
 			dob: dob,
-			image_uri: imageUrlParam,
+			image_uri: image_uri,
 			phone: contact
 		}
 

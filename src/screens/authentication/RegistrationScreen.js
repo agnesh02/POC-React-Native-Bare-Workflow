@@ -148,7 +148,7 @@ const styling = StyleSheet.create({
     pBar: {
         borderColor: "black",
         position: "absolute",
-        top: 500
+        top: 550
     }
 })
 

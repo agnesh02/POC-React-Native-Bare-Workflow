@@ -93,6 +93,10 @@ const LoginScreen = function () {
 				</TouchableOpacity>
 			</View>
 
+			<TouchableOpacity style={{ position: "absolute", top: 560}} onPress={() =>  navigation.navigate("Reset Password")} >
+					<Text style={styling.buttonOutlineText}>Forgot you password ?</Text>
+			</TouchableOpacity>
+
 			<View style={styling.buttonContainer2}>
 				<TouchableOpacity style={[styling.button2, styling.buttonOutline]} onPress={() =>  navigation.navigate("Registration")} >
 					<Text style={styling.buttonOutlineText}>Don't have an account ? Click here</Text>

@@ -9,6 +9,8 @@ import IonIcon from 'react-native-vector-icons/Ionicons';
 import Toaster from './Toaster';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
+import {name as app_name, version as app_version}  from '../../package.json';
+
 
 const CustomDrawer = props => {
 
@@ -76,6 +78,12 @@ const CustomDrawer = props => {
             </DrawerContentScrollView>
 
             <View style={{ padding: 20, borderTopWidth: 1, borderTopColor: '#ccc' }}>
+                <TouchableOpacity onPress={() => { Toaster(`App version : ${app_version}`) }} style={{ paddingVertical: 15 }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <IonIcon name="information-circle-outline" size={24} color="black" />
+                        <Text style={{ fontSize: 15, marginLeft: 5 }}> Version : {app_version} </Text>
+                    </View>
+                </TouchableOpacity>
                 <TouchableOpacity onPress={() => { logoutUser() }} style={{ paddingVertical: 15 }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <IonIcon name="exit-outline" size={24} color="red" />

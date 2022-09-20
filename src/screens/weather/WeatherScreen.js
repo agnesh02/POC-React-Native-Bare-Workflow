@@ -34,32 +34,31 @@ const WeatherScreen = function () {
             return
         }
 
-        Toaster("Fetching weather details of "+cityName)
+        Toaster("Fetching weather details of " + cityName)
         const currentUrl = "weather?q=" + `${cityName}` + "&APPID=b6ce0b3456949601e391e5a558343936&units=metric"
         getCurrentWeatherData(currentUrl)
     }
 
     const getCurrentWeatherData = async function (currentWeatherUrl) {
 
-        try{
+        try {
             const response = await OpenWeatherMap.get(currentWeatherUrl)
             const fetchedData = response.data
-    
+
             setBasicData(fetchedData.weather[0])
             setMainData(fetchedData.main)
             setWindData(fetchedData.wind)
             setIcon(fetchedData.weather[0].icon)
-    
+
             const forecastUrl = "forecast?q=" + `${cityName}` + "&APPID=b6ce0b3456949601e391e5a558343936&units=metric&cnt=6"
             getForecastData(forecastUrl)
         }
-        catch(e)
-        {
+        catch (e) {
             Toaster("Some error occurred. Try a different city")
             setVisibility(false)
             return
         }
-       
+
     }
 
     const getForecastData = async function (forecastWeatherUrl) {
@@ -96,7 +95,7 @@ const WeatherScreen = function () {
                 </TouchableOpacity>
             </View>
 
-            {visibility ? <ActivityIndicator style={{marginTop: 50}} size="large" /> : null}
+            {visibility ? <ActivityIndicator style={{ marginTop: 50 }} size="large" /> : null}
 
             {hasData ?
 
@@ -110,7 +109,8 @@ const WeatherScreen = function () {
 
                     <View style={styling.cardMain}>
                         <View style={styling.cardInfo}>
-                            <Image source={require("../../../assets/hot.png")} style={{ width: 40, height: 40 }} />
+                            {Math.round(mainData.temp) >= 26 && <Image source={require("../../../assets/hot.png")} style={{ width: 40, height: 40 }} />}
+                            {Math.round(mainData.temp) < 26 && <Image source={require("../../../assets/cold.png")} style={{ width: 40, height: 40 }} />}
                             <Text style={{ fontSize: 25, marginLeft: 20, marginTop: 5 }}> {`${Math.round(mainData.temp)}`}°C </Text>
                         </View>
                         <View style={styling.cardInfo}>

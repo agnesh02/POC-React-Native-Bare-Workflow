@@ -22,6 +22,8 @@ import ListBleDevicesScreen from './src/screens/ble/ListBleDevicesScreen';
 import DeviceActionScreen from './src/screens/ble/DeviceActionScreen';
 import SplashScreen from './src/components/SplashScreen';
 import { color } from 'react-native-reanimated';
+import ResetPasswordScreen from './src/screens/authentication/ResetPassword';
+import ChangePasswordScreen from './src/screens/profile/ChangePasswordScreen';
 
 
 function SideNavigation() {
@@ -101,9 +103,11 @@ function App() {
 				<Stack.Screen options={{ headerShown: false }} name="Splash Screen" component={SplashScreen} />
 				<Stack.Screen options={{ headerBackVisible: false }} name="Login" component={LoginScreen} />
 				<Stack.Screen name="Registration" component={RegistrationScreen} />
+				<Stack.Screen name="Reset Password" component={ResetPasswordScreen} />
 				<Stack.Screen options={{ headerShown: false }} name="Side Navigation" component={SideNavigation} />
 				<Stack.Screen name="Profile Picture" component={ProfilePictureScreen} /*options={{ drawerItemStyle: { display: "none" } }}*/ />
 				<Stack.Screen name="Edit Profile" component={EditProfileScreen} />
+				<Stack.Screen name="Change Password" component={ChangePasswordScreen} />
 				<Stack.Screen name="Live Content" component={LiveContentScreen} />
 				<Stack.Screen name="Device Action" component={DeviceActionScreen} />
 			</Stack.Navigator>

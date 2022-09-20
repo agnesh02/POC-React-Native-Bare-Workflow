@@ -6,40 +6,47 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { initializeFirestore } from "firebase/firestore";
 import { doc, getDoc } from "firebase/firestore";
 import Toaster from "./Toaster";
+import { async } from "@firebase/util";
 
 const SplashScreen = ({ navigation }) => {
 
     const auth = getAuth(app)
 
-    useEffect(async () => {
-        try {
+    useEffect(() => {
 
-            const value = await AsyncStorage.getItem('isRemembered')
+        async function checkLoginState() {
+            try {
 
-            if (value !== null) {
+                const value = await AsyncStorage.getItem('isRemembered')
 
-                const asEmail = await AsyncStorage.getItem('as_email')
-                const asPassword = await AsyncStorage.getItem('as_password')
+                if (value !== null) {
 
-                await signInWithEmailAndPassword(auth, asEmail, asPassword)
-                    .then(() => {
-                        getUserData(asEmail)
-                        setTimeout(() => navigation.replace("Side Navigation"), 2000)
-                    })
-                    .catch((error) => {
-                        //const errorCode = error.code;
-                        const errorMessage = error.message;
-                        Toaster(errorMessage)
-                        setVisibility(false)
-                    });
+                    const asEmail = await AsyncStorage.getItem('as_email')
+                    const asPassword = await AsyncStorage.getItem('as_password')
+
+                    await signInWithEmailAndPassword(auth, asEmail, asPassword)
+                        .then(() => {
+                            getUserData(asEmail)
+                            setTimeout(() => navigation.replace("Side Navigation"), 2000)
+                        })
+                        .catch((error) => {
+                            //const errorCode = error.code;
+                            const errorMessage = error.message;
+                            Toaster(errorMessage)
+                            setVisibility(false)
+                        });
+                }
+                else {
+                    setTimeout(() => { navigation.replace("Login"); Toaster("Please login") }, 5000)
+                    console.log(value)
+                }
+            } catch (e) {
+                console.log(e.message)
             }
-            else {
-                setTimeout(() => { navigation.replace("Login"); Toaster("Please login") }, 5000)
-                console.log(value)
-            }
-        } catch (e) {
-            console.log(e.message)
         }
+
+        checkLoginState()
+
     }, [])
 
     const getUserData = async function (email) {
@@ -59,10 +66,8 @@ const SplashScreen = ({ navigation }) => {
     return (
         <View style={styling.mainContainer}>
             <View style={styling.splashScreenRootView}>
-                <View style={styling.splashScreenChildView}>
-                    <Image source={require('../../assets/POC-RN2.png')}
-                        style={{ width: '100%', height: '100%', resizeMode: 'contain' }} />
-                </View>
+                <Image source={require('../../assets/POC-RN3.png')}
+                    style={{ width: '100%', height: '100%', resizeMode: 'contain' }} />
             </View>
         </View>
     );
@@ -72,23 +77,21 @@ const styling = StyleSheet.create({
     mainContainer:
     {
         flex: 1,
-        justifyContent: 'center',
+        justifyContent: 'flex-end',
         alignItems: 'center',
+        backgroundColor: 'white',
     },
     splashScreenRootView:
     {
-        justifyContent: 'center',
-        flex: 1,
-        margin: 10,
-        position: 'absolute',
+        justifyContent: 'flex-end',
+        backgroundColor: 'white',
         width: '100%',
-        height: '100%',
+        height: '90%',
     },
     splashScreenChildView:
     {
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'white',
         flex: 1,
     },
 });
