@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
+import { View, StyleSheet, Text, Image } from "react-native";
+import Toaster from "./Toaster";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { app } from "../../api/FirebaseConfig";
 import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
-import { View, StyleSheet, Text, Image } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { initializeFirestore } from "firebase/firestore";
-import { doc, getDoc } from "firebase/firestore";
-import Toaster from "./Toaster";
-import { async } from "@firebase/util";
+import { initializeFirestore, doc, getDoc } from "firebase/firestore";
+
 
 const SplashScreen = ({ navigation }) => {
 

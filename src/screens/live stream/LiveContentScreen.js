@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Text, StyleSheet, View, PermissionsAndroid } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, PermissionsAndroid } from "react-native";
 import { WebView } from "react-native-webview";
-import Toaster from "../../components/Toaster";
 import RecordStream from "../../components/RecordStream";
 import RNFS from "react-native-fs"
 import { useNavigation } from "@react-navigation/native";
@@ -66,12 +65,12 @@ const LiveContentScreen = function ({ route }) {
     useNavigation().setOptions(
         {
             headerRight: () => (
-                <RecordStream 
-                    recordingState={recordingState} 
-                    url={contentUrl} path={absolutePath.replace('/','')} 
-                    fileName = {Date().replace(/ /g,'')}
-                    onRecordingStarted={() => setRecordingState("Stop")} 
-                    onRecordingStopped={() => setRecordingState("Record")} 
+                <RecordStream
+                    recordingState={recordingState}
+                    url={contentUrl} path={absolutePath.replace('/', '')}
+                    fileName={Date().replace(/ /g, '')}
+                    onRecordingStarted={() => setRecordingState("Stop")}
+                    onRecordingStopped={() => setRecordingState("Record")}
                 />
             )
         }

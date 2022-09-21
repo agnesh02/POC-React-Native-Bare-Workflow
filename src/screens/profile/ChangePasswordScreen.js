@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Text, TouchableOpacity, TextInput, StyleSheet, View, ActivityIndicator } from "react-native"
 import Toaster from "../../components/Toaster";
-import { getAuth, updatePassword } from "firebase/auth";
-import { app } from "../../../api/FirebaseConfig";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { app } from "../../../api/FirebaseConfig";
+import { getAuth, updatePassword } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
 
 
@@ -20,12 +20,11 @@ const ChangePasswordScreen = function () {
     const validate = function () {
         setVisibility(true)
         if (newPassword === "" || confirmNewPassword === "") {
-            Toaster("Please fill up all the feilds")
+            Toaster("Please fill up all the fields")
             setVisibility(false)
             return
         }
-        if(newPassword !== confirmNewPassword)
-        {
+        if (newPassword !== confirmNewPassword) {
             Toaster("Passwords does not match")
             setVisibility(false)
             return
@@ -39,15 +38,15 @@ const ChangePasswordScreen = function () {
 
         updatePassword(user, newPassword).then(() => {
             setVisibility(false)
-            console.log("Password has been changed successfully")
+            //console.log("Password has been changed successfully")
             logoutUser()
         }).catch((error) => {
             setVisibility(false)
-            if(error.message === "Firebase: Error (auth/requires-recent-login).")
+            if (error.message === "Firebase: Error (auth/requires-recent-login).")
                 Toaster("Needs a recent login. Please reauthenticate and try again")
             else
                 Toaster(error.message)
-            console.log(error.message)
+            //console.log(error.message)
         });
     }
 
@@ -61,8 +60,8 @@ const ChangePasswordScreen = function () {
                 Toaster("Password has been changed successfully. Please login again")
                 navigation.reset({
                     index: 0,
-                    routes: [{name: 'Login'}],
-                  });
+                    routes: [{ name: 'Login' }],
+                });
             })
             .catch((error) => {
                 console.log(error.message)
@@ -75,8 +74,8 @@ const ChangePasswordScreen = function () {
         <View style={styling.container}>
 
             <View style={styling.inputContainer}>
-                <TextInput autoCapitalize="none" autoCorrect={false} placeholder="Enter your new password" value={newPassword} onChangeText={text => setNewPassword(text.trim())} style={styling.input} secureTextEntry/>
-                <TextInput autoCapitalize="none" autoCorrect={false} placeholder="COnfirm your new password" value={confirmNewPassword} onChangeText={text => setConfirmNewPassword(text.trim())} style={styling.input} secureTextEntry/>
+                <TextInput autoCapitalize="none" autoCorrect={false} placeholder="Enter your new password" value={newPassword} onChangeText={text => setNewPassword(text.trim())} style={styling.input} secureTextEntry />
+                <TextInput autoCapitalize="none" autoCorrect={false} placeholder="COnfirm your new password" value={confirmNewPassword} onChangeText={text => setConfirmNewPassword(text.trim())} style={styling.input} secureTextEntry />
             </View>
 
             <View style={styling.buttonContainer}>
@@ -96,9 +95,7 @@ const styling = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center',
-        // borderWidth: 2,
-        // borderColor: "red"
+        alignItems: 'center'
     },
     inputContainer: {
         width: '80%'

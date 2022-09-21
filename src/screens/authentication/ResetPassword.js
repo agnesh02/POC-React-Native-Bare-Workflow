@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Text, TouchableOpacity, TextInput, StyleSheet, View, ActivityIndicator } from "react-native"
 import Toaster from "../../components/Toaster";
-import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { app } from "../../../api/FirebaseConfig";
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+
 
 const ResetPasswordScreen = function () {
 
@@ -24,15 +25,14 @@ const ResetPasswordScreen = function () {
     }
 
     const sendResetEmail = async function () {
-        
+
         sendPasswordResetEmail(auth, email)
             .then(() => {
                 Toaster("Password reset link has been sent to you registered email id")
                 setVisibility(false)
             })
             .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
+                //const errorCode = error.code;
                 Toaster(error.message)
                 console.log(error.message)
                 setVisibility(false)
@@ -65,8 +65,6 @@ const styling = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        // borderWidth: 2,
-        // borderColor: "red"
     },
     inputContainer: {
         width: '80%'

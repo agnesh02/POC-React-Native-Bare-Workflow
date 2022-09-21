@@ -1,19 +1,19 @@
 import React, { useState } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, Image, ActivityIndicator } from 'react-native'
-import { launchImageLibrary } from 'react-native-image-picker';
 import Toaster from "../../components/Toaster";
+import { launchImageLibrary } from 'react-native-image-picker';
 import { app } from '../../../api/FirebaseConfig'
-import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { doc, initializeFirestore, updateDoc } from "firebase/firestore";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { useNavigation } from '@react-navigation/native';
 
-//import { getAuth } from 'firebase/auth'
+
 
 const ProfilePictureScreen = function ({ route }) {
 
     const { userEmail } = route.params
     const navigation = useNavigation()
-    
+
     const [image, setImage] = useState(null);
     const [uploadingStatus, setUploadingStatus] = useState(false);
 
@@ -37,7 +37,7 @@ const ProfilePictureScreen = function ({ route }) {
                 console.log('User tapped custom button: ', response.customButton);
                 alert(response.customButton);
             } else {
-                const source = { uri: response.uri };
+                //const source = { uri: response.uri };
                 console.log('response', JSON.stringify(response));
                 setImage(response.assets[0].uri)
             }

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Text, StyleSheet, TouchableOpacity, ActivityIndicator, TextInput, View, FlatList, Image, Keyboard, ScrollView, KeyboardAvoidingView } from "react-native"
-import OpenWeatherMap from "../../../api/OpenWeatherMap";
 import Toaster from "../../components/Toaster";
+import OpenWeatherMap from "../../../api/OpenWeatherMap";
 
 const WeatherScreen = function () {
 

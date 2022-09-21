@@ -1,14 +1,15 @@
 import React from "react";
 import { Text, View, StyleSheet, ScrollView, Image, TouchableOpacity } from "react-native"
+import Toaster from "../../components/Toaster";
 import base64 from 'react-native-base64'
 import { _BleManager, connectDevice } from '../../components/BleManager'
-import Toaster from "../../components/Toaster";
 
 const DeviceActionScreen = function ({ route }) {
 
     const { data, deviceId, deviceName } = route.params
 
     const readData = async function () {
+
         try {
             console.log("Reading characteristics from '00002a00-0000-1000-8000-00805f9b34fb' of '00001800-0000-1000-8000-00805f9b34fb' ")
             const readChar = await data.readCharacteristicForService("00001800-0000-1000-8000-00805f9b34fb", '00002a00-0000-1000-8000-00805f9b34fb')
@@ -54,8 +55,8 @@ const DeviceActionScreen = function ({ route }) {
         _BleManager.cancelDeviceConnection(deviceId)
             .then(async (device) => {
                 console.log(await device.isConnected())
-                Toaster("Device has been disconnected successfully"+
-                "\nJust a reminder to turn off bluetooth and location if you no longer need it")
+                Toaster("Device has been disconnected successfully" +
+                    "\nJust a reminder to turn off bluetooth and location if you no longer need it")
             })
             .catch((error) => {
                 console.log(error.message)

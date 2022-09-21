@@ -1,12 +1,11 @@
 import { BleManager } from 'react-native-ble-plx';
-import Toaster from './Toaster';
 
 const _BleManager = new BleManager()
 
 const connectDevice = async function (deviceId) {
 
     console.log("connecting to device..")
-    
+
     const msg = await _BleManager.connectToDevice(deviceId, null)
         .then(async (device) => {
 
@@ -23,10 +22,9 @@ const connectDevice = async function (deviceId) {
             const readableCharacteristics = await data.characteristicsForService('00001801-0000-1000-8000-00805f9b34fb')
             console.log('readable chars', readableCharacteristics);
             console.log('success')
-            //upOnConnection(data, device.id, device.name)
 
             return data
-            
+
         })
         .catch((error) => {
             console.log(error.message)
@@ -35,8 +33,6 @@ const connectDevice = async function (deviceId) {
 
     return msg
 }
-
-
 
 
 export { _BleManager, connectDevice }

@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, ImageBackground, Image, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
 import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
-import { app } from '../../api/FirebaseConfig';
-import { getAuth } from 'firebase/auth';
-import { initializeFirestore } from 'firebase/firestore';
-import { doc, getDoc } from 'firebase/firestore';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import Toaster from './Toaster';
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/native";
-import {name as app_name, version as app_version}  from '../../package.json';
+import { name as app_name, version as app_version } from '../../package.json';
+import { app } from '../../api/FirebaseConfig';
+import { getAuth } from 'firebase/auth';
+import { initializeFirestore, doc, getDoc } from 'firebase/firestore';
 
 
 const CustomDrawer = props => {
@@ -38,8 +36,8 @@ const CustomDrawer = props => {
         }
     }
 
-    useEffect(()=>{getProfileData()},[ ])
-    
+    useEffect(() => { getProfileData() }, [])
+
 
     const logoutUser = async function () {
 
@@ -119,8 +117,8 @@ const styling = StyleSheet.create({
     },
     pBar: {
         position: 'absolute',
-		top: 73
-	},
+        top: 73
+    },
 })
 
 export default CustomDrawer;

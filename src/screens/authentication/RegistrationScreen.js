@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { Text, TextInput, View, StyleSheet, TouchableOpacity, ActivityIndicator } from "react-native"
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
-import { app } from "../../../api/FirebaseConfig";
 import Toaster from "../../components/Toaster";
-import { initializeFirestore } from "firebase/firestore";
-import { setDoc, doc } from "firebase/firestore";
+import { app } from "../../../api/FirebaseConfig";
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { initializeFirestore, setDoc, doc } from "firebase/firestore";
 
 const RegistrationScreen = function () {
 
@@ -89,8 +88,8 @@ const RegistrationScreen = function () {
             <View style={styling.buttonContainer}>
                 <TouchableOpacity style={styling.button}
                     onPress={() => {
-                            validate()
-                        }
+                        validate()
+                    }
                     }>
                     <Text style={styling.buttonText}>Register Now</Text>
                 </TouchableOpacity>

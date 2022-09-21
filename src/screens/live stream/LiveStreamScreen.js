@@ -10,8 +10,7 @@ const LiveStreamScreen = function ({ navigation }) {
 
     const validate = function () {
 
-        if(url === '')
-        {
+        if (url === '') {
             if (ip === "" || ip.includes(',') || ip.includes('-')) {
                 Toaster("Please enter a valid ip address")
                 return
@@ -22,10 +21,9 @@ const LiveStreamScreen = function ({ navigation }) {
             }
             loadContent()
         }
-        else
-        {
+        else {
             loadContent()
-        }   
+        }
     }
 
     const loadContent = function () {
@@ -35,14 +33,14 @@ const LiveStreamScreen = function ({ navigation }) {
     return (
         <View style={styling.container}>
             <View style={styling.inputContainer}>
-                <TextInput autoCapitalize="none" autoCorrect={false} placeholder="Enter IP" value={ip} onChangeText={text => setIp(text.trim())} onPressIn={()=>setUrl('')}  style={styling.input} keyboardType="numeric" />
-                <TextInput autoCapitalize="none" autoCorrect={false} placeholder="Enter port (default: 8080)" value={port} onChangeText={text => setPort(text.trim())} onPressIn={()=>setUrl('')} style={styling.input2} keyboardType="numeric" />
+                <TextInput autoCapitalize="none" autoCorrect={false} placeholder="Enter IP" value={ip} onChangeText={text => setIp(text.trim())} onPressIn={() => setUrl('')} style={styling.input} keyboardType="numeric" />
+                <TextInput autoCapitalize="none" autoCorrect={false} placeholder="Enter port (default: 8080)" value={port} onChangeText={text => setPort(text.trim())} onPressIn={() => setUrl('')} style={styling.input2} keyboardType="numeric" />
             </View>
 
             <Text>OR</Text>
 
             <View style={styling.inputContainer}>
-                <TextInput autoCapitalize="none" autoCorrect={false} placeholder="Enter URL" value={url} onChangeText={text => setUrl(text.trim())} onPressIn={()=>{setIp(''); setPort('')}} style={styling.input} />
+                <TextInput autoCapitalize="none" autoCorrect={false} placeholder="Enter URL" value={url} onChangeText={text => setUrl(text.trim())} onPressIn={() => { setIp(''); setPort('') }} style={styling.input} />
             </View>
 
             <View style={styling.buttonContainer}>

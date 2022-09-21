@@ -22,7 +22,7 @@ const LoginScreen = function () {
 	const userVerification = function (user) {
 		sendEmailVerification(user)
 			.then(() => {
-				console.log(user)
+				//console.log(user)
 				Toaster("Please check your email, verify yourself and then login.")
 			})
 			.catch((error) => {
@@ -112,7 +112,7 @@ const LoginScreen = function () {
 			</View>
 
 			<TouchableOpacity style={{ position: "absolute", top: 560 }} onPress={() => navigation.navigate("Reset Password")} >
-				<Text style={styling.buttonOutlineText}>Forgot you password ?</Text>
+				<Text style={styling.buttonOutlineText}>Forgot your password ?</Text>
 			</TouchableOpacity>
 
 			<View style={styling.buttonContainer2}>

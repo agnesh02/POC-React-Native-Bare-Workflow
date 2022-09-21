@@ -1,6 +1,4 @@
 import * as React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
-import Toaster from './src/components/Toaster';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator, DrawerItem } from '@react-navigation/drawer';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -21,7 +19,6 @@ import LiveContentScreen from './src/screens/live stream/LiveContentScreen';
 import ListBleDevicesScreen from './src/screens/ble/ListBleDevicesScreen';
 import DeviceActionScreen from './src/screens/ble/DeviceActionScreen';
 import SplashScreen from './src/components/SplashScreen';
-import { color } from 'react-native-reanimated';
 import ResetPasswordScreen from './src/screens/authentication/ResetPassword';
 import ChangePasswordScreen from './src/screens/profile/ChangePasswordScreen';
 

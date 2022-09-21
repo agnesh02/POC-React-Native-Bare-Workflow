@@ -47,6 +47,7 @@ const ListBleDevicesScreen = function App({ navigation }) {
     }
 
     const startScan = async function () {
+
         deviceList.length = 0
         _BleManager.startDeviceScan(null, null, (error, device) => {
             if (error) {

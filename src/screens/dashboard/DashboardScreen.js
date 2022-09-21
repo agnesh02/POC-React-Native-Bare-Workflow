@@ -1,11 +1,7 @@
 import React from "react";
 import { Text, View, StyleSheet, FlatList, TouchableOpacity, Image } from "react-native"
-import Toaster from "../../components/Toaster";
 
 const DashboardScreen = function ({ navigation }) {
-
-	//onst{userEmail} = route.params
-	//console.log(userEmail)
 
 	const onItemClick = function (title) {
 		switch (title) {

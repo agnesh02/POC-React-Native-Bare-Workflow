@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { Text, TextInput, View, StyleSheet, TouchableOpacity, ActivityIndicator } from "react-native"
 import Toaster from "../../components/Toaster";
-import { doc, updateDoc } from "firebase/firestore";
-import { initializeFirestore } from "firebase/firestore";
 import { app } from "../../../api/FirebaseConfig";
+import { initializeFirestore, doc, updateDoc } from "firebase/firestore";
 import { useNavigation } from "@react-navigation/native";
 
 const EditProfileScreen = function ({ route }) {
@@ -15,7 +14,6 @@ const EditProfileScreen = function ({ route }) {
 	const [fullname, setFullname] = useState(fullnameParam)
 	const [dob, setDob] = useState(dobParam)
 	const [contact, setContact] = useState(contactParam)
-
 	const [visibility, setVisibility] = useState(false)
 
 	const updateUserData = async function () {
@@ -25,7 +23,7 @@ const EditProfileScreen = function ({ route }) {
 
 		let image_uri = imageUrlParam
 
-		if(image_uri===null)
+		if (image_uri === null)
 			image_uri = ""
 
 		const data = {
@@ -92,12 +90,6 @@ const EditProfileScreen = function ({ route }) {
 				</TouchableOpacity>
 			</View>
 
-			{/* <View style={styling.buttonContainer2}>
-                <TouchableOpacity style={[styling.button2, styling.buttonOutline]} onPress={() => navigation.navigate("Registration")} >
-                    <Text style={styling.buttonOutlineText}>Don't have an account ? Click here</Text>
-                </TouchableOpacity>
-            </View> */}
-
 			{visibility ? <ActivityIndicator style={styling.pBar} size="large" /> : null}
 
 		</View>
@@ -109,9 +101,7 @@ const styling = StyleSheet.create({
 	container: {
 		flex: 1,
 		justifyContent: 'center',
-		alignItems: 'center',
-		// borderWidth: 2,
-		// borderColor: "red"
+		alignItems: 'center'
 	},
 	inputContainer: {
 		width: '80%'

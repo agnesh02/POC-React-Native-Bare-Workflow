@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Text, View, StyleSheet, Image, TouchableOpacity, ScrollView, ActivityIndicator } from "react-native"
 import Toaster from "../../components/Toaster";
-import { initializeFirestore } from "firebase/firestore";
-import { doc, getDoc } from "firebase/firestore";
 import { app } from "../../../api/FirebaseConfig";
 import { getAuth } from "firebase/auth";
+import { initializeFirestore, doc, getDoc } from "firebase/firestore";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 
 const ProfileScreen = function ({ navigation }) {
 
-    //const{userEmail} = route.params
     const auth = getAuth(app)
     const userEmail = auth.currentUser?.email
 
@@ -59,7 +57,6 @@ const ProfileScreen = function ({ navigation }) {
 
     useEffect(() => {
         getProfileData()
-        fetchImageUrl()
     }, [])
 
     return (
@@ -86,8 +83,8 @@ const ProfileScreen = function ({ navigation }) {
                             <Text style={styling.description}>Phone    : {contact}</Text>
                         </View>
                     </View>
-                    <TouchableOpacity style={{alignSelf: "center", marginTop: 50}} onPress={() => navigation.navigate("Change Password", { userEmail: userEmail })}>
-                        <Text style={{fontSize: 18, color: "blue"}}>Change my password</Text>
+                    <TouchableOpacity style={{ alignSelf: "center", marginTop: 50 }} onPress={() => navigation.navigate("Change Password", { userEmail: userEmail })}>
+                        <Text style={{ fontSize: 18, color: "blue" }}>Change my password</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>
