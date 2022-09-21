@@ -3,7 +3,7 @@ import { Text, TextInput, View, StyleSheet, TouchableOpacity, ActivityIndicator 
 import CheckBox from '@react-native-community/checkbox';
 import Toaster from "../../components/Toaster";
 import { app } from "../../../api/FirebaseConfig";
-import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
+import { signInWithEmailAndPassword, getAuth, sendEmailVerification } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
 import { initializeFirestore } from "firebase/firestore";
 import { doc, getDoc } from "firebase/firestore";
@@ -19,11 +19,29 @@ const LoginScreen = function () {
 	const [visibility, setVisibility] = useState(false)
 	const [isChecked, setIsChecked] = useState(false);
 
+	const userVerification = function (user) {
+		sendEmailVerification(user)
+			.then(() => {
+				console.log(user)
+				Toaster("Please check your email, verify yourself and then login.")
+			})
+			.catch((error) => {
+				Toaster(error.message)
+			})
+		setVisibility(false)
+	}
+
 	const loginUser = async function () {
+
 
 		signInWithEmailAndPassword(auth, email, password)
 			.then((userCredential) => {
-				//const user = userCredential.user;
+
+				const user = userCredential.user;
+				if (!user.emailVerified) {
+					userVerification(user)
+					return
+				}
 
 				if (isChecked) {
 					AsyncStorage.setItem('isRemembered', "true")
@@ -44,17 +62,17 @@ const LoginScreen = function () {
 
 	const getUserData = async function (email) {
 
-        const firestore = initializeFirestore(app, { experimentalAutoDetectLongPolling: true })
-        const docRef = doc(firestore, "USERS", email)
-        const docSnap = await getDoc(docRef)
+		const firestore = initializeFirestore(app, { experimentalAutoDetectLongPolling: true })
+		const docRef = doc(firestore, "USERS", email)
+		const docSnap = await getDoc(docRef)
 
-        if (docSnap.exists()) {
-            Toaster("Welcome " + docSnap.data().username + ".")
-        }
-        else {
-            Toaster("An error occurred")
-        }
-    }
+		if (docSnap.exists()) {
+			Toaster("Welcome " + docSnap.data().username + ".")
+		}
+		else {
+			Toaster("An error occurred")
+		}
+	}
 
 	const validate = function () {
 		setVisibility(true)
@@ -76,7 +94,7 @@ const LoginScreen = function () {
 	return (
 
 		<View style={styling.container}>
-		
+
 			<View style={styling.inputContainer}>
 				<TextInput autoCapitalize="none" autoCorrect={false} placeholder="Email" value={email} onChangeText={text => setEmail(text.trim())} style={styling.input} />
 				<TextInput autoCapitalize="none" autoCorrect={false} placeholder="Password" value={password} onChangeText={text => setPassword(text.trim())} style={styling.input} secureTextEntry />
@@ -93,12 +111,12 @@ const LoginScreen = function () {
 				</TouchableOpacity>
 			</View>
 
-			<TouchableOpacity style={{ position: "absolute", top: 560}} onPress={() =>  navigation.navigate("Reset Password")} >
-					<Text style={styling.buttonOutlineText}>Forgot you password ?</Text>
+			<TouchableOpacity style={{ position: "absolute", top: 560 }} onPress={() => navigation.navigate("Reset Password")} >
+				<Text style={styling.buttonOutlineText}>Forgot you password ?</Text>
 			</TouchableOpacity>
 
 			<View style={styling.buttonContainer2}>
-				<TouchableOpacity style={[styling.button2, styling.buttonOutline]} onPress={() =>  navigation.navigate("Registration")} >
+				<TouchableOpacity style={[styling.button2, styling.buttonOutline]} onPress={() => navigation.navigate("Registration")} >
 					<Text style={styling.buttonOutlineText}>Don't have an account ? Click here</Text>
 				</TouchableOpacity>
 			</View>

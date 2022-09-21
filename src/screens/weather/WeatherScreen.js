@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, StyleSheet, TouchableOpacity, ActivityIndicator, TextInput, View, FlatList, Image, ScrollView, KeyboardAvoidingView } from "react-native"
+import { Text, StyleSheet, TouchableOpacity, ActivityIndicator, TextInput, View, FlatList, Image, Keyboard, ScrollView, KeyboardAvoidingView } from "react-native"
 import OpenWeatherMap from "../../../api/OpenWeatherMap";
 import Toaster from "../../components/Toaster";
 
@@ -90,7 +90,7 @@ const WeatherScreen = function () {
                 <View style={styling.inputContainer}>
                     <TextInput autoCapitalize="none" autoCorrect={false} placeholder="Enter a city" style={styling.input} onChangeText={(text) => setCityName(text.trim())} value={cityName} onPressIn={() => setHasData(false)} />
                 </View>
-                <TouchableOpacity style={styling.GoButton} onPress={() => { validate() }}>
+                <TouchableOpacity style={styling.GoButton} onPress={() => { Keyboard.dismiss(); validate() }}>
                     <Text style={styling.GoButtonText}>GO</Text>
                 </TouchableOpacity>
             </View>

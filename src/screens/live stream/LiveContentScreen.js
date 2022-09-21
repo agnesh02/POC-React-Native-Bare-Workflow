@@ -42,26 +42,27 @@ const LiveContentScreen = function ({ route }) {
 
     requestStoragePermission()
 
-    const dirName = 'poc-rn-recordings'
-    const absolutePath = RNFS.ExternalStorageDirectoryPath + '/' + dirName
-    RNFS.exists(absolutePath)
-        .then((exists) => {
-            if (exists) {
-                console.log("PATH EXISTS");
-            } else {
-                console.log("PATH DOES NOT EXIST..Creating directory..");
-                RNFS.mkdir(absolutePath)
-                    .then(() =>
-                        console.log("Directory created successfully")
-                    )
-                    .catch((error) => {
-                        console.log(error.message)
-                        console.log("Check for storage permission")
-                        Toaster(error.message+" : "+"Also, please check if the storage permissions are granted")
-                    })
-            }
-        });
+    // const dirName = 'poc-rn-recordings'
+    // const absolutePath = RNFS.ExternalStorageDirectoryPath + '/' + dirName
+    // RNFS.exists(absolutePath)
+    //     .then((exists) => {
+    //         if (exists) {
+    //             console.log("PATH EXISTS");
+    //         } else {
+    //             console.log("PATH DOES NOT EXIST..Creating directory..");
+    //             RNFS.mkdir(absolutePath)
+    //                 .then(() =>
+    //                     console.log("Directory created successfully")
+    //                 )
+    //                 .catch((error) => {
+    //                     console.log(error.message)
+    //                     console.log("Check for storage permission")
+    //                     Toaster(error.message+" : "+"Also, please check if the storage permissions are granted")
+    //                 })
+    //         }
+    //     });
 
+    const absolutePath = RNFS.ExternalDirectoryPath
     useNavigation().setOptions(
         {
             headerRight: () => (
